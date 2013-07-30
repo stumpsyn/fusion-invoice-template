@@ -113,6 +113,12 @@
                                   <th>Invoice Number:</td>
                                   <td><?php echo $invoice->invoice_number; ?></td>
                                 </tr>
+                                <?php if ($invoice->invoice_custom_po_number) { ?>
+                                  <tr>
+                                    <th>PO Number:</td>
+                                    <td><?php echo $invoice->invoice_custom_po_number; ?></td>
+                                  </tr>
+                                <?php } ?>
                                 <tr>
                                     <th><?php echo lang('invoice_date'); ?>: </td>
                                     <td><?php echo date_from_mysql($invoice->invoice_date_created, TRUE); ?></td>
