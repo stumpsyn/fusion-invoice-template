@@ -16,7 +16,6 @@
           <?php if ($invoice->user_custom_ein) { ?>EIN: <?php echo $invoice->user_custom_ein; ?><?php } ?>
         </div>
       </td>
-    </tr>
       <td style="text-align: right;">
         <img id="logo" src="/syndicate_assets/syndicate_invoice_logo.svg">
       </td>

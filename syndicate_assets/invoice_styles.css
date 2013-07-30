@@ -23,7 +23,7 @@ tr.highlight {
     padding: 0px;
 }
 #header table td, .amount-summary td {
-    vertical-align: text-top;
+    vertical-align: top;
     padding: 5px;
 }
 #invoice-to td {
