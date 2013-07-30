@@ -80,7 +80,8 @@
                   <br>
                   <?php if ($invoice->user_phone) { ?><?php echo $invoice->user_phone; ?><br><?php } ?>
                   <?php if ($invoice->user_fax) { ?><abbr>Fax:</abbr><?php echo $invoice->user_fax; ?><br><?php } ?>
-                  <?php if ($invoice->user_email) { ?><?php echo $invoice->user_email; ?><?php } ?>
+                  <?php if ($invoice->user_email) { ?><?php echo $invoice->user_email; ?><br><?php } ?>
+                  <?php if ($invoice->user_custom_ein) { ?>EIN: <?php echo $invoice->user_custom_ein; ?><?php } ?>
                 </div>
               </td>
             </tr>
