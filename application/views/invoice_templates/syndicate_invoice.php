@@ -4,17 +4,27 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/default/css/bootstrap.min.css">
-        
+
         <style>
             * {
                 margin:0px;
-                padding:5px;
             }
-            body {
+            body, p {
                 color: #000 !important;
+                font-size: 11px;
             }
             table {
                 width:100%;
+            }
+            tr.highlight {
+              background: rgb(240, 240, 240);
+              border: 1px solid rgb(220,220,220);
+            }
+            #header {
+                margin-bottom: 2em;
+            }
+            #logo {
+                float: right;
             }
             #header table {
                 width:100%;
@@ -24,20 +34,20 @@
                 vertical-align: text-top;
                 padding: 5px;
             }
-            #company-name{
-                color:#000;
-                font-size: 18px;
-            }
             #invoice-to td {
                 text-align: left
             }
             #invoice-to {
                 margin-bottom: 15px;
             }
-            #invoice-to-right-table td {
-                padding-right: 5px;
-                padding-left: 5px;
+            #invoice-to-right-table td,
+            #invoice-to-right-table th {
+                padding: .25em .5em;
                 text-align: right;
+                font-weight: normal;
+            }
+            #invoice-to-right-table th {
+                padding-right: 3em
             }
             .seperator {
                 height: 25px
@@ -49,29 +59,37 @@
                 border:none !important;
                 background-color: white !important;
             }
+            th {
+              text-align: left;
+            }
         </style>
-        
+
 	</head>
 	<body>
         <div id="header">
-            <table>
-                <tr>
-                    <td id="company-name">
-                        <?php echo invoice_logo(); ?>
-                        <h2><?php echo $invoice->user_name; ?></h2>
-                        <p>
-                            <?php if ($invoice->user_address_1) { echo $invoice->user_address_1 . '<br>'; } ?>
-                            <?php if ($invoice->user_address_2) { echo $invoice->user_address_2 . '<br>'; } ?>
-                            <?php if ($invoice->user_city) { echo $invoice->user_city . ' '; } ?>
-                            <?php if ($invoice->user_state) { echo $invoice->user_state . ' '; } ?>
-                            <?php if ($invoice->user_zip) { echo $invoice->user_zip . '<br>'; } ?>
-                            <?php if ($invoice->user_phone) { ?><abbr>P:</abbr><?php echo $invoice->user_phone; ?><br><?php } ?>
-                            <?php if ($invoice->user_fax) { ?><abbr>F:</abbr><?php echo $invoice->user_fax; ?><?php } ?>
-                        </p>
-                    </td>
-                    <td style="text-align: right;"><h2><?php echo lang('invoice'); ?> <?php echo $invoice->invoice_number; ?></h2></td>
-                </tr>
-            </table>
+          <table>
+            <tr>
+              <td>
+                <div id="biller-info">
+                  <?php echo $invoice->user_name . '<br>'; ?>
+                  <?php if ($invoice->user_address_1) { echo $invoice->user_address_1 . '<br>'; } ?>
+                  <?php if ($invoice->user_address_2) { echo $invoice->user_address_2 . '<br>'; } ?>
+                  <?php if ($invoice->user_city) { echo $invoice->user_city . ' '; } ?>
+                  <?php if ($invoice->user_state) { echo $invoice->user_state . ' '; } ?>
+                  <?php if ($invoice->user_zip) { echo $invoice->user_zip . '<br>'; } ?>
+                  <br>
+                  <?php if ($invoice->user_phone) { ?><?php echo $invoice->user_phone; ?><br><?php } ?>
+                  <?php if ($invoice->user_fax) { ?><abbr>Fax:</abbr><?php echo $invoice->user_fax; ?><br><?php } ?>
+                  <?php if ($invoice->user_email) { ?><?php echo $invoice->user_email; ?><?php } ?>
+                </div>
+              </td>
+            </tr>
+              <td style="text-align: right;">
+                <img id="logo" src="/syndicate_assets/syndicate_invoice_logo.svg">
+              </td>
+            <tr>
+          </tr>
+        </table>
         </div>
         <div id="invoice-to">
             <table style="width: 100%;">
@@ -92,15 +110,19 @@
                         <table id="invoice-to-right-table">
                             <tbody>
                                 <tr>
-                                    <td><?php echo lang('invoice_date'); ?>: </td>
+                                  <th>Invoice Number:</td>
+                                  <td><?php echo $invoice->invoice_number; ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo lang('invoice_date'); ?>: </td>
                                     <td><?php echo date_from_mysql($invoice->invoice_date_created, TRUE); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php echo lang('due_date'); ?>: </td>
+                                    <th><?php echo lang('due_date'); ?>: </td>
                                     <td><?php echo date_from_mysql($invoice->invoice_date_due, TRUE); ?></td>
                                 </tr>
-                                <tr>
-                                    <td><?php echo lang('amount_due'); ?>: </td>
+                                <tr class="highlight">
+                                    <th><?php echo lang('amount_due'); ?>: </td>
                                     <td><?php echo format_currency($invoice->invoice_balance); ?></td>
                                 </tr>
                             </tbody>
@@ -125,7 +147,7 @@
                         <tr>
                             <td><?php echo $item->item_name; ?></td>
                             <td><?php echo $item->item_description; ?></td>
-                            <td style="text-align: right;"><?php echo $item->item_quantity; ?></td>
+                            <td style="text-align: right;"><?php echo intval($item->item_quantity); ?></td>
                             <td style="text-align: right;"><?php echo format_currency($item->item_price); ?></td>
                             <td style="text-align: right;"><?php echo format_currency($item->item_subtotal); ?></td>
                         </tr>
@@ -147,7 +169,7 @@
                             </tr>
                             <?php } ?>
                             <?php foreach ($invoice_tax_rates as $invoice_tax_rate) : ?>
-                                <tr>    
+                                <tr>
                                     <td style="text-align: right;"><?php echo $invoice_tax_rate->invoice_tax_rate_name . ' ' . $invoice_tax_rate->invoice_tax_rate_percent; ?>%</td>
                                     <td style="text-align: right;"><?php echo format_currency($invoice_tax_rate->invoice_tax_rate_amount); ?></td>
                                 </tr>
@@ -168,7 +190,7 @@
                     </td>
                 </tr>
             </table>
-            
+
             <div class="seperator"></div>
             <?php if ($invoice->invoice_terms) { ?>
             <h4><?php echo lang('terms'); ?></h4>
