@@ -1,4 +1,4 @@
 DEPLOY_HOST='stumptownsyndicate.org'
 DEPLOY_PATH='/var/www/invoices.stumptownsyndicate.org/'
 
-rsync -uvax --progress --exclude=.* --exclude=Rakefile --exclude=README.md ./ $DEPLOY_HOST:$DEPLOY_PATH
+rsync -uvax --progress --exclude=.* --exclude=deploy --exclude=README.md --exclude=LICENSE ./ $DEPLOY_HOST:$DEPLOY_PATH
