@@ -13,7 +13,7 @@
           <?php if ($invoice->user_phone) { ?><?php echo $invoice->user_phone; ?><br><?php } ?>
           <?php if ($invoice->user_fax) { ?><abbr>Fax:</abbr><?php echo $invoice->user_fax; ?><br><?php } ?>
           <?php if ($invoice->user_email) { ?><?php echo $invoice->user_email; ?><br><?php } ?>
-          <?php if ($invoice->user_custom_ein) { ?>EIN: <?php echo $invoice->user_custom_ein; ?><?php } ?>
+          <?php if ($invoice->user_custom_ein) { ?>EIN: <?php echo $invoice->user_custom_ein; ?><br><?php } ?>
           <?php if ($invoice->user_custom_w9_url) { ?>Form W-9: <?php echo $invoice->user_custom_w9_url; ?><?php } ?>
         </div>
       </td>
